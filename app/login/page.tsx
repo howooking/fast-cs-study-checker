@@ -7,6 +7,14 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { FcGoogle } from "react-icons/fc";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Login() {
   const { toast } = useToast();
@@ -55,13 +63,22 @@ export default function Login() {
   };
 
   return (
-    <Button
-      type="button"
-      onClick={handleGoogleLogin}
-      className="flex gap-2 w-full"
-    >
-      <FcGoogle />
-      구글 로그인
-    </Button>
+    <Card className="w-1/2 mx-auto max-w-sm">
+      <CardHeader>
+        <CardTitle className="text-xl">로그인</CardTitle>
+        <CardDescription>구글아이디 없진 않잖아</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button
+          type="button"
+          onClick={handleGoogleLogin}
+          className="flex gap-2 w-full "
+        >
+          <FcGoogle />
+          구글 로그인
+        </Button>
+      </CardContent>
+      <CardFooter>Provided by Google</CardFooter>
+    </Card>
   );
 }

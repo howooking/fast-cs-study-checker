@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Nanum_Pen_Script } from "next/font/google";
+import { Sunflower } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/navbar/navbar";
@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 
-const font = Nanum_Pen_Script({ subsets: ["latin"], weight: "400" });
+const font = Sunflower({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export const metadata: Metadata = {
   title: "FE5기 화이팅",
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head />
-      <body className={cn(font.className, "text-xl")}>
+      <body className={cn(font.className)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -30,7 +30,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          {children}
+          <div className="min-h-[calc(100vh-60px)] flex flex-col justify-center">
+            {children}
+          </div>
           <Toaster />
         </ThemeProvider>
       </body>
