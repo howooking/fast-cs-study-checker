@@ -63,7 +63,7 @@ export default function Login() {
   };
 
   return (
-    <Card className="w-1/2 mx-auto max-w-sm">
+    <Card className="w-3/4 mx-auto max-w-sm">
       <CardHeader>
         <CardTitle className="text-xl">로그인</CardTitle>
         <CardDescription>구글아이디 없진 않잖아</CardDescription>

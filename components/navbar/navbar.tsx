@@ -30,6 +30,11 @@ export default async function Navbar() {
               <Button variant="outline">스터디깃허브</Button>
             </Link>
           </li>
+          <li>
+            <Link href="/statistic">
+              <Button variant="outline">통계</Button>
+            </Link>
+          </li>
           <li className="flex items-center">
             {user ? (
               <NavbarAvatar />
