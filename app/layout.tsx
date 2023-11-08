@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { Sunflower } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/navbar/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
-
-const font = Sunflower({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export const metadata: Metadata = {
   title: "FE5기 화이팅",
@@ -22,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head />
-      <body className={cn(font.className)}>
+      <body className={cn()}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
