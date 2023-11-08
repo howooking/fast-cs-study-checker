@@ -1,17 +1,10 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { Database } from "@/lib/database.types";
+import SubjectsTable from "@/components/table/subjects-table";
 
 export default async function Home() {
   const { data: subjects, error } = await createServerComponentClient<Database>(
@@ -28,37 +21,9 @@ export default async function Home() {
   }
 
   return (
-    <Table className="w-3/4 mx-auto max-w-3xl">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-12 text-center">순번</TableHead>
-          <TableHead className="text-center">주제</TableHead>
-          <TableHead className="w-12 text-center">체크</TableHead>
-          <TableHead className="w-14 text-center">한사람</TableHead>
-          <TableHead className="w-20 text-center">링크</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {subjects?.map((subject) => (
-          <TableRow key={subject.id}>
-            <TableCell className="text-center">{subject.number}</TableCell>
-            <TableCell>{subject.title}</TableCell>
-            <TableCell className="text-center">
-              <Checkbox checked={subject.is_done} />
-            </TableCell>
-            <TableCell className="text-center">{subject.user_name}</TableCell>
-            <TableCell className="text-center">
-              {subject.link && (
-                <Button variant="link">
-                  <Link href={subject.link} target="_blank">
-                    링크
-                  </Link>
-                </Button>
-              )}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      <div>todo: filtering</div>
+      <SubjectsTable subjects={subjects} />
+    </>
   );
 }
