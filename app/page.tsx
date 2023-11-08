@@ -9,13 +9,18 @@ import {
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import type { Database } from "@/lib/database.types";
 
 export default async function Home() {
-  const { data: subjects, error } = await createServerComponentClient({
-    cookies,
-  })
+  const { data: subjects, error } = await createServerComponentClient<Database>(
+    {
+      cookies,
+    }
+  )
     .from("subjects")
-    .select("id, number, title, is_done, user_name")
+    .select("id, number, title, is_done, user_name, link")
     .order("number");
 
   if (error) {
@@ -30,6 +35,7 @@ export default async function Home() {
           <TableHead className="text-center">주제</TableHead>
           <TableHead className="w-12 text-center">체크</TableHead>
           <TableHead className="w-14 text-center">한사람</TableHead>
+          <TableHead className="w-20 text-center">링크</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -41,6 +47,15 @@ export default async function Home() {
               <Checkbox checked={subject.is_done} />
             </TableCell>
             <TableCell className="text-center">{subject.user_name}</TableCell>
+            <TableCell className="text-center">
+              {subject.link && (
+                <Button variant="link">
+                  <Link href={subject.link} target="_blank">
+                    링크
+                  </Link>
+                </Button>
+              )}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
