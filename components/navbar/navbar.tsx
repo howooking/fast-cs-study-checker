@@ -17,14 +17,16 @@ export default async function Navbar() {
       <nav className="flex items-center justify-between container py-1">
         <Link
           href="/"
-          className="text-xl text-primary hover:opacity-80 transition sm:text-3xl pr-2"
+          className="text-xl text-primary hover:opacity-80 transition hidden sm:block"
         >
           CS CHECKER
         </Link>
         <ul className="flex items-center gap-4">
           <li>
             <Link href="/subjects">
-              <Button variant="outline">스터디주제</Button>
+              <Button variant="outline" className="text-xs sm:text-base">
+                스터디체크
+              </Button>
             </Link>
           </li>
           <li>
@@ -32,7 +34,9 @@ export default async function Navbar() {
               href="https://github.com/sudheerj/javascript-interview-questions#what-are-the-possible-ways-to-create-objects-in-javascript"
               target="_blank"
             >
-              <Button variant="outline">스터디깃허브</Button>
+              <Button variant="outline" className="text-xs sm:text-base">
+                스터디깃허브
+              </Button>
             </Link>
           </li>
           {/* <li>
@@ -45,7 +49,7 @@ export default async function Navbar() {
               <NavbarAvatar />
             ) : (
               <Link href="/login">
-                <Button>로그인</Button>
+                <Button className="text-xs sm:text-base">로그인</Button>
               </Link>
             )}
           </li>
