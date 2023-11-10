@@ -23,6 +23,11 @@ export default async function Navbar() {
         </Link>
         <ul className="flex items-center gap-4">
           <li>
+            <Link href="/subjects">
+              <Button variant="outline">스터디주제</Button>
+            </Link>
+          </li>
+          <li>
             <Link
               href="https://github.com/sudheerj/javascript-interview-questions#what-are-the-possible-ways-to-create-objects-in-javascript"
               target="_blank"
