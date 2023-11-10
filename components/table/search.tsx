@@ -21,6 +21,7 @@ export default function Search() {
 
   return (
     <Input
+      placeholder="주제 검색"
       className="flex-shrink"
       onChange={(e) => {
         handleSearch(e.target.value);
