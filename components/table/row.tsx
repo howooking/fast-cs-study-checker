@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Checkbox } from "../ui/checkbox";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { supabase } from "@/lib/supabase-client";
 
 type RowProps = {
@@ -48,12 +49,16 @@ export default function Row({ subject, userName }: RowProps) {
     <TableRow>
       <TableCell className="text-center">{subject.number}</TableCell>
       <TableCell>{subject.title}</TableCell>
-      <TableCell className="text-center">
-        <Checkbox
-          checked={subject.is_done}
-          disabled={isChecking}
-          onClick={handleCheck}
-        />
+      <TableCell className="w-12 mx-auto pl-4">
+        {isChecking ? (
+          <AiOutlineLoading3Quarters className="animate-spin" />
+        ) : (
+          <Checkbox
+            checked={subject.is_done}
+            disabled={isChecking}
+            onClick={handleCheck}
+          />
+        )}
       </TableCell>
       <TableCell className="text-center">{subject.user_name}</TableCell>
       <TableCell className="text-center">
