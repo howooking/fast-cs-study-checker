@@ -1,7 +1,12 @@
+"use client";
+
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Checkbox } from "../ui/checkbox";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase-client";
 
 type RowProps = {
   subject: {
@@ -12,24 +17,54 @@ type RowProps = {
     user_name: string | null;
     link: string | null;
   };
+  userName?: string;
 };
 
-export default function Row({ subject }: RowProps) {
+export default function Row({ subject, userName }: RowProps) {
+  const router = useRouter();
+  const [isChecking, setIsChecking] = useState(false);
+
+  const handleCheck = async () => {
+    setIsChecking(true);
+    try {
+      await fetch(`${location.origin}/api/subjects`, {
+        method: "PUT",
+        body: JSON.stringify({
+          id: subject.id,
+          is_done: subject.is_done,
+          user_name: userName,
+        }),
+      });
+      router.refresh();
+    } catch (error) {
+      console.error(error, "error while toggling a todo");
+      throw new Error("error while toggling a todo");
+    } finally {
+      setIsChecking(false);
+    }
+  };
+
   return (
     <TableRow>
       <TableCell className="text-center">{subject.number}</TableCell>
       <TableCell>{subject.title}</TableCell>
       <TableCell className="text-center">
-        <Checkbox checked={subject.is_done} />
+        <Checkbox
+          checked={subject.is_done}
+          disabled={isChecking}
+          onClick={handleCheck}
+        />
       </TableCell>
       <TableCell className="text-center">{subject.user_name}</TableCell>
       <TableCell className="text-center">
-        {subject.link && (
+        {subject.is_done && subject.link ? (
           <Button variant="link">
             <Link href={subject.link} target="_blank">
               링크
             </Link>
           </Button>
+        ) : (
+          <Button size="sm">연결</Button>
         )}
       </TableCell>
     </TableRow>
