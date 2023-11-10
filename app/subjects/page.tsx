@@ -10,9 +10,10 @@ import SubjectFilter from "@/components/table/subject-filter";
 export default async function SubjectsPage({
   searchParams,
 }: {
-  searchParams?: { query?: string };
+  searchParams?: { query?: string; filter?: "all" | "done" | "notDone" };
 }) {
   const query = searchParams?.query || "";
+  const filter = searchParams?.filter || "all";
   const {
     data: { user },
   } = await createServerComponentClient<Database>({
@@ -27,7 +28,11 @@ export default async function SubjectsPage({
     <>
       <SubjectFilter userName={user?.user_metadata.name} />
       <Suspense fallback={<SubjectsTableSkeleton />}>
-        <SubjectsTable userName={user?.user_metadata.name} query={query} />
+        <SubjectsTable
+          userName={user?.user_metadata.name}
+          query={query}
+          filter={filter}
+        />
       </Suspense>
     </>
   );
