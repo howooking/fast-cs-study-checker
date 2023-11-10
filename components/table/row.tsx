@@ -63,24 +63,26 @@ export default function Row({ subject, userName }: RowProps) {
       </TableCell>
       <TableCell className="text-center">{subject.user_name}</TableCell>
       <TableCell className="text-center">
-        {subject.is_done && subject.link ? (
-          <Button variant="link">
-            <Link href={subject.link} target="_blank">
-              링크
-            </Link>
-          </Button>
+        {subject.link ? (
+          <div className="flex">
+            <ConnectLinkDialog
+              title={subject.title}
+              disabled={!subject.is_done}
+              link={subject.link || ""}
+              edit
+            />
+            <Button variant="link">
+              <Link href={subject.link} target="_blank">
+                링크
+              </Link>
+            </Button>
+          </div>
         ) : (
-          <>
-            {subject.link ? (
-              <Button variant="link">링크</Button>
-            ) : (
-              <ConnectLinkDialog
-                title={subject.title}
-                disabled={!subject.is_done}
-                link={subject.link || ""}
-              />
-            )}
-          </>
+          <ConnectLinkDialog
+            title={subject.title}
+            disabled={!subject.is_done}
+            link={subject.link || ""}
+          />
         )}
       </TableCell>
     </TableRow>

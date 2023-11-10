@@ -16,22 +16,33 @@ type ConnectLinkDialogProps = {
   disabled: boolean;
   link: string;
   title: string;
+  edit?: boolean;
 };
 
 export default function ConnectLinkDialog({
   title,
   link,
   disabled,
+  edit,
 }: ConnectLinkDialogProps) {
   const [linkInput, setLinkInput] = useState(link);
   return (
     <Dialog>
-      <Button size="sm" asChild disabled={disabled}>
-        <DialogTrigger>연결</DialogTrigger>
+      <Button
+        size="sm"
+        asChild
+        disabled={disabled}
+        variant={edit ? "outline" : "default"}
+      >
+        <DialogTrigger>{edit ? "수정" : "연결"}</DialogTrigger>
       </Button>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>발표자료 링크를 연결해주세요</DialogTitle>
+          <DialogTitle>
+            {edit
+              ? "발표자료 링크를 수정해주세요"
+              : "발표자료 링크를 연결해주세요"}
+          </DialogTitle>
           <p className="text-sm">{title}</p>
         </DialogHeader>
         <DialogDescription>

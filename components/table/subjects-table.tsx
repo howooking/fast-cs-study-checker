@@ -53,7 +53,7 @@ export default async function SubjectsTable({
           <TableHead className="text-center">주제</TableHead>
           <TableHead className="w-12 text-center">체크</TableHead>
           <TableHead className="w-16 text-center">한사람</TableHead>
-          <TableHead className="w-20 text-center">링크</TableHead>
+          <TableHead className="w-36 text-center">링크</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
