@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConnectLinkDialog from "./connect-link-dialog";
+import { supabase } from "@/lib/supabase-client";
 
 type RowProps = {
   subject: {
@@ -56,7 +57,7 @@ export default function Row({ subject, userName }: RowProps) {
         ) : (
           <Checkbox
             checked={subject.is_done}
-            disabled={isChecking}
+            disabled={subject.is_done && userName !== subject.user_name}
             onClick={handleCheck}
           />
         )}
