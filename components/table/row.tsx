@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { supabase } from "@/lib/supabase-client";
+import ConnectLinkDialog from "./connect-link-dialog";
 
 type RowProps = {
   subject: {
@@ -69,7 +70,17 @@ export default function Row({ subject, userName }: RowProps) {
             </Link>
           </Button>
         ) : (
-          <Button size="sm">연결</Button>
+          <>
+            {subject.link ? (
+              <Button variant="link">링크</Button>
+            ) : (
+              <ConnectLinkDialog
+                title={subject.title}
+                disabled={!subject.is_done}
+                link={subject.link || ""}
+              />
+            )}
+          </>
         )}
       </TableCell>
     </TableRow>
