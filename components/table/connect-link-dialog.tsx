@@ -11,8 +11,10 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ConnectLinkDialogProps = {
+  id: string;
   disabled: boolean;
   link: string;
   title: string;
@@ -24,8 +26,33 @@ export default function ConnectLinkDialog({
   link,
   disabled,
   edit,
+  id,
 }: ConnectLinkDialogProps) {
   const [linkInput, setLinkInput] = useState(link);
+
+  const router = useRouter();
+  const [isConnecting, setIsConnecting] = useState(false);
+
+  const handleLink = async () => {
+    setIsConnecting(true);
+    try {
+      await fetch(`${location.origin}/api/subjects`, {
+        method: "PUT",
+        body: JSON.stringify({
+          id,
+          link: linkInput,
+          type: "link",
+        }),
+      });
+      router.refresh();
+    } catch (error) {
+      console.error(error, "error while toggling a todo");
+      throw new Error("error while toggling a todo");
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
   return (
     <Dialog>
       <Button
@@ -48,13 +75,13 @@ export default function ConnectLinkDialog({
         <DialogDescription>
           <Input
             placeholder="깃허브 링크 || 블로그 링크 || 노션링크"
-            value={link}
+            value={linkInput}
             onChange={(e) => setLinkInput(e.target.value)}
           />
         </DialogDescription>
         <DialogFooter>
           <DialogClose>
-            <Button>연결</Button>
+            <Button onClick={handleLink}>{edit ? "수정" : "연결"}</Button>
           </DialogClose>
           <DialogClose>
             <Button variant="destructive">취소</Button>

@@ -7,7 +7,6 @@ import { Checkbox } from "../ui/checkbox";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { supabase } from "@/lib/supabase-client";
 import ConnectLinkDialog from "./connect-link-dialog";
 
 type RowProps = {
@@ -35,6 +34,7 @@ export default function Row({ subject, userName }: RowProps) {
           id: subject.id,
           is_done: subject.is_done,
           user_name: userName,
+          type: "done",
         }),
       });
       router.refresh();
@@ -66,6 +66,7 @@ export default function Row({ subject, userName }: RowProps) {
         {subject.link ? (
           <div className="flex">
             <ConnectLinkDialog
+              id={subject.id}
               title={subject.title}
               disabled={!subject.is_done}
               link={subject.link || ""}
@@ -79,6 +80,7 @@ export default function Row({ subject, userName }: RowProps) {
           </div>
         ) : (
           <ConnectLinkDialog
+            id={subject.id}
             title={subject.title}
             disabled={!subject.is_done}
             link={subject.link || ""}
