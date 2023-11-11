@@ -5,6 +5,13 @@ import ToggleTheme from "@/components/toggle-theme";
 import { NavbarAvatar } from "@/components/navbar/navbar-avatar";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
+import {
+  AiOutlineCheck,
+  AiFillGithub,
+  AiOutlineHome,
+  AiOutlineLogin,
+  AiOutlineLogout,
+} from "react-icons/ai";
 
 export default async function Navbar() {
   const cookieStore = cookies();
@@ -24,18 +31,26 @@ export default async function Navbar() {
 
   return (
     <header className="border-b-[1px]">
-      <nav className="flex items-center justify-between container py-1">
+      <nav className="flex items-center mx-auto py-1 gap-2 px-4">
         <Link
           href="/"
-          className="text-xl text-primary hover:opacity-80 transition hidden sm:block"
+          className="text-xl text-primary hover:opacity-80 transition flex-1"
         >
-          CS CHECKER
+          <Button variant="ghost" className="hidden sm:block">
+            CS CHECKER
+          </Button>
+          <Button variant="outline" className="sm:hidden block">
+            <AiOutlineHome />
+          </Button>
         </Link>
-        <ul className="flex items-center gap-4">
+        <ul className="flex items-center gap-1 justify-between">
           <li>
             <Link href="/subjects">
-              <Button variant="outline" className="text-xs sm:text-base">
+              <Button variant="outline" className="hidden sm:block">
                 스터디체크
+              </Button>
+              <Button variant="outline" className="sm:hidden block">
+                <AiOutlineCheck />
               </Button>
             </Link>
           </li>
@@ -44,8 +59,11 @@ export default async function Navbar() {
               href="https://github.com/sudheerj/javascript-interview-questions#what-are-the-possible-ways-to-create-objects-in-javascript"
               target="_blank"
             >
-              <Button variant="outline" className="text-xs sm:text-base">
+              <Button variant="outline" className="hidden sm:block">
                 스터디깃허브
+              </Button>
+              <Button variant="outline" className="sm:hidden block">
+                <AiFillGithub />
               </Button>
             </Link>
           </li>
@@ -55,12 +73,20 @@ export default async function Navbar() {
               <div className="flex items-center gap-2">
                 <NavbarAvatar avatar={user?.user_metadata.avatar_url} />
                 <form action={signOut}>
-                  <Button variant="destructive">로그아웃</Button>
+                  <Button className="hidden sm:block" variant="destructive">
+                    로그아웃
+                  </Button>
+                  <Button className="sm:hidden block" variant="destructive">
+                    <AiOutlineLogout />
+                  </Button>
                 </form>
               </div>
             ) : (
               <Link href="/login">
-                <Button className="text-xs sm:text-base">로그인</Button>
+                <Button className="hidden sm:block">로그인</Button>
+                <Button className="sm:hidden block">
+                  <AiOutlineLogin />
+                </Button>
               </Link>
             )}
           </li>

@@ -19,7 +19,7 @@ export default function Home() {
       </div>
 
       <div className="flex gap-2">
-        <p>Built with</p>
+        <p>TOOLS</p>
         <Badge className="bg-orange-400">nextjs</Badge>
         <Badge className="bg-orange-400">supabase</Badge>
         <Badge className="bg-orange-400">shadcnui</Badge>

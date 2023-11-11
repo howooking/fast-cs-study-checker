@@ -45,7 +45,7 @@ export default async function SubjectsTable({
     throw new Error("error while fetching subjects");
   }
   return (
-    <Table className="w-5/6 mx-auto max-w-4xl">
+    <Table className="w-5/6 mx-auto max-w-4xl text-xs sm:text-base">
       <TableHeader>
         <TableRow>
           <TableHead className="w-12 text-center">순번</TableHead>

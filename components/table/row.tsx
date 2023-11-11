@@ -72,7 +72,7 @@ export default function Row({ subject, userName }: RowProps) {
               link={subject.link || ""}
               edit
             />
-            <Button variant="link">
+            <Button variant="link" size="sm">
               <Link href={subject.link} target="_blank">
                 링크
               </Link>
