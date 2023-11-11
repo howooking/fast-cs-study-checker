@@ -30,7 +30,7 @@ export default function SubjectFilter({ userName }: SubjectFilterProps) {
   };
 
   return (
-    <div className="w-3/4 mx-auto max-w-3xl flex gap-8 items-center justify-between my-10">
+    <div className="w-5/6 mx-auto max-w-4xl flex gap-8 items-center justify-between my-10">
       <Select
         onValueChange={(value) => handleSelect(value)}
         defaultValue={searchParams.get("filter")?.toString()}

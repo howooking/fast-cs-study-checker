@@ -65,7 +65,7 @@ export default function Row({ subject, userName }: RowProps) {
       <TableCell className="text-center">{subject.user_name}</TableCell>
       <TableCell className="text-center">
         {subject.link ? (
-          <div className="flex">
+          <div className="flex justify-between">
             <ConnectLinkDialog
               id={subject.id}
               title={subject.title}

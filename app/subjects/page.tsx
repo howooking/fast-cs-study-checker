@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import SubjectsTable from "@/components/table/subjects-table";
 import type { Database } from "@/lib/database.types";
 import { redirect } from "next/navigation";
 import SubjectsTableSkeleton from "@/components/table/subject-table-skeleton";
 import SubjectFilter from "@/components/table/subject-filter";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function SubjectsPage({
   searchParams,
@@ -14,11 +14,13 @@ export default async function SubjectsPage({
 }) {
   const query = searchParams?.query || "";
   const filter = searchParams?.filter || "all";
+
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   const {
     data: { user },
-  } = await createServerComponentClient<Database>({
-    cookies,
-  }).auth.getUser();
+  } = await supabase.auth.getUser();
 
   if (!user) {
     redirect("/login");

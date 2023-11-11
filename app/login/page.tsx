@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -15,12 +14,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { createClient } from "@/utils/supabase/client";
 
 export default function Login() {
   const { toast } = useToast();
 
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   useEffect(() => {
     const {
@@ -63,7 +63,7 @@ export default function Login() {
   };
 
   return (
-    <Card className="w-3/4 mx-auto max-w-sm mt-40">
+    <Card className="w-5/6 mx-auto max-w-sm mt-40">
       <CardHeader>
         <CardTitle className="text-xl">로그인</CardTitle>
         <CardDescription>로그인하자</CardDescription>

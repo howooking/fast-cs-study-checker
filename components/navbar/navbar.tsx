@@ -1,16 +1,26 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-
 import { Button } from "@/components/ui/button";
 import ToggleTheme from "@/components/toggle-theme";
 import { NavbarAvatar } from "@/components/navbar/navbar-avatar";
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function Navbar() {
-  const supabase = createServerComponentClient({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const signOut = async () => {
+    "use server";
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+    await supabase.auth.signOut();
+    return redirect("/login");
+  };
 
   return (
     <header className="border-b-[1px]">
@@ -39,14 +49,15 @@ export default async function Navbar() {
               </Button>
             </Link>
           </li>
-          {/* <li>
-            <Link href="/statistic">
-              <Button variant="outline">통계</Button>
-            </Link>
-          </li> */}
+
           <li className="flex items-center">
             {user ? (
-              <NavbarAvatar />
+              <div className="flex items-center gap-2">
+                <NavbarAvatar avatar={user?.user_metadata.avatar_url} />
+                <form action={signOut}>
+                  <Button variant="destructive">로그아웃</Button>
+                </form>
+              </div>
             ) : (
               <Link href="/login">
                 <Button className="text-xs sm:text-base">로그인</Button>

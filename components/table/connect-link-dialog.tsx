@@ -80,10 +80,8 @@ export default function ConnectLinkDialog({
           />
         </DialogDescription>
         <DialogFooter>
-          <DialogClose>
+          <DialogClose className="flex items-center gap-1">
             <Button onClick={handleLink}>{edit ? "수정" : "연결"}</Button>
-          </DialogClose>
-          <DialogClose>
             <Button variant="destructive">취소</Button>
           </DialogClose>
         </DialogFooter>

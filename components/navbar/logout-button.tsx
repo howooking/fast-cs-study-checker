@@ -1,45 +1,21 @@
-"use client";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase-server";
+import { Button } from "../ui/button";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useToast } from "@/components/ui/use-toast";
+export default async function LogoutButton() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-export default function LogoutButton() {
-  const supabase = createClientComponentClient();
-  const router = useRouter();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      router.refresh();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [router, supabase.auth]);
-
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        toast({
-          variant: "destructive",
-          title: error.message,
-          description: "Try later",
-        });
-        return;
-      }
-      toast({
-        title: "Bye Bye 🖐️🖐️",
-      });
-      router.push("/");
-    } catch (error) {
-      throw new Error("error while signing out");
-    }
+  const signOut = async () => {
+    "use server";
+    await supabase.auth.signOut();
+    return redirect("/login");
   };
-  return <div onClick={handleLogout}>Logout</div>;
+
+  return (
+    <form action={signOut}>
+      <Button variant="destructive">Logout</Button>
+    </form>
+  );
 }
