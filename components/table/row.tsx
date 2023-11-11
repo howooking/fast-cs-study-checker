@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConnectLinkDialog from "./connect-link-dialog";
-import { supabase } from "@/lib/supabase-client";
 
 type RowProps = {
   subject: {
