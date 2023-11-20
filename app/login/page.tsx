@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+
 import {
   Card,
   CardContent,
@@ -61,14 +63,38 @@ export default function Login() {
       console.error(error);
     }
   };
+  const handleGithubLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: `${location.origin}/auth/callback`,
+        },
+      });
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: error.message,
+          description: "Try later",
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "error while signing in with google",
+        description: "Try later",
+      });
+      console.error(error);
+    }
+  };
 
   return (
     <Card className="w-5/6 mx-auto max-w-sm mt-40">
       <CardHeader>
         <CardTitle className="text-xl">로그인</CardTitle>
-        <CardDescription>로그인하자</CardDescription>
+        <CardDescription>깃허브 추가</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-2">
         <Button
           type="button"
           onClick={handleGoogleLogin}
@@ -77,8 +103,16 @@ export default function Login() {
           <FcGoogle />
           구글 로그인
         </Button>
+        <Button
+          type="button"
+          onClick={handleGithubLogin}
+          className="flex gap-2 w-full "
+        >
+          <FaGithub />
+          깃허브 로그인
+        </Button>
       </CardContent>
-      <CardFooter>Provided by Google</CardFooter>
+      <CardFooter>Provided by Google & Github</CardFooter>
     </Card>
   );
 }

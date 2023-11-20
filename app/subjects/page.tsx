@@ -19,22 +19,18 @@ export default async function SubjectsPage({
   const supabase = createClient(cookieStore);
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  if (!user) {
+  if (!session) {
     redirect("/login");
   }
 
   return (
     <>
-      <SubjectFilter userName={user?.user_metadata.name} />
+      <SubjectFilter />
       <Suspense fallback={<SubjectsTableSkeleton />}>
-        <SubjectsTable
-          userName={user?.user_metadata.name}
-          query={query}
-          filter={filter}
-        />
+        <SubjectsTable query={query} filter={filter} />
       </Suspense>
     </>
   );

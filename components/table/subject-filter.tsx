@@ -10,11 +10,7 @@ import {
 import Search from "./search";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-type SubjectFilterProps = {
-  userName?: string;
-};
-
-export default function SubjectFilter({ userName }: SubjectFilterProps) {
+export default function SubjectFilter() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();

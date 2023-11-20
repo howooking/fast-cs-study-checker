@@ -16,16 +16,20 @@ type SubjectsTableProps = {
 };
 
 export default async function SubjectsTable({
-  userName,
   query,
   filter,
 }: SubjectsTableProps) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: subjects, error: error1 } = await supabase
+  const {
+    data: { session },
+    error: error1,
+  } = await supabase.auth.getSession();
+
+  const { data: subjects, error: error2 } = await supabase
     .from("subjects")
-    .select("id, number, title, is_done, user_name, link")
+    .select(`id, number, title, is_done, link, profiles(user_name), user_id`)
     .order("number");
 
   const searchedSubjects = !query
@@ -41,7 +45,7 @@ export default async function SubjectsTable({
       ? searchedSubjects?.filter((subject) => subject.is_done)
       : searchedSubjects?.filter((subject) => !subject.is_done);
 
-  if (error1) {
+  if (error1 || error2) {
     throw new Error("error while fetching subjects");
   }
   return (
@@ -57,7 +61,7 @@ export default async function SubjectsTable({
       </TableHeader>
       <TableBody>
         {filteredSearchedSubjects?.map((subject) => (
-          <Row key={subject.id} subject={subject} userName={userName} />
+          <Row key={subject.id} subject={subject} session={session} />
         ))}
       </TableBody>
     </Table>

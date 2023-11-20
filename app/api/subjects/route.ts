@@ -9,21 +9,21 @@ export async function PUT(request: NextRequest) {
   const { data: session } = await supabase.auth.getSession();
 
   if (type === "done") {
-    if (is_done === true) {
+    if (is_done) {
       const { data } = await supabase
         .from("subjects")
         .update({
           is_done: false,
-          user_name: null,
           link: null,
           user_id: null,
         })
         .match({ id });
+
       return NextResponse.json(data);
     }
     const { data } = await supabase
       .from("subjects")
-      .update({ is_done: true, user_name, user_id: session.session?.user.id })
+      .update({ is_done: true, user_id: session.session?.user.id })
       .match({ id });
     return NextResponse.json(data);
   }

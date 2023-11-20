@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko">
       <head />
       <body className={cn(sunflower.className, "antialiased")}>
         <ThemeProvider

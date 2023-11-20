@@ -71,7 +71,10 @@ export default async function Navbar() {
           <li className="flex items-center">
             {user ? (
               <div className="flex items-center gap-2">
-                <NavbarAvatar avatar={user?.user_metadata.avatar_url} />
+                <NavbarAvatar
+                  avatar={user?.user_metadata.avatar_url}
+                  fallback={user.user_metadata.name}
+                />
                 <form action={signOut}>
                   <Button className="hidden sm:block" variant="destructive">
                     로그아웃

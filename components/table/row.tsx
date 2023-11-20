@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ConnectLinkDialog from "./connect-link-dialog";
+import { Session } from "@supabase/supabase-js";
 
 type RowProps = {
   subject: {
@@ -15,13 +16,16 @@ type RowProps = {
     number: number;
     title: string;
     is_done: boolean;
-    user_name: string | null;
     link: string | null;
+    profiles: {
+      user_name: string | null;
+    } | null;
+    user_id: string | null;
   };
-  userName?: string;
+  session: Session | null;
 };
 
-export default function Row({ subject, userName }: RowProps) {
+export default function Row({ subject, session }: RowProps) {
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(false);
 
@@ -33,7 +37,6 @@ export default function Row({ subject, userName }: RowProps) {
         body: JSON.stringify({
           id: subject.id,
           is_done: subject.is_done,
-          user_name: userName,
           type: "done",
         }),
       });
@@ -56,12 +59,14 @@ export default function Row({ subject, userName }: RowProps) {
         ) : (
           <Checkbox
             checked={subject.is_done}
-            disabled={subject.is_done && userName !== subject.user_name}
+            disabled={subject.is_done && session?.user.id !== subject.user_id}
             onClick={handleCheck}
           />
         )}
       </TableCell>
-      <TableCell className="text-center">{subject.user_name}</TableCell>
+      <TableCell className="text-center">
+        {subject?.profiles?.user_name ?? ""}
+      </TableCell>
       <TableCell className="text-center">
         {subject.link ? (
           <div className="flex justify-between">
