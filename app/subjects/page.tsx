@@ -22,7 +22,13 @@ export default async function SubjectsPage({
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) {
+  const { data: user } = await supabase
+    .from("profiles")
+    .select("id, user_name, avatar_url")
+    .eq("id", session?.user.id as string)
+    .single();
+
+  if (!user) {
     redirect("/login");
   }
 

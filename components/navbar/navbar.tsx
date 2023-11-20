@@ -12,14 +12,21 @@ import {
   AiOutlineLogin,
   AiOutlineLogout,
 } from "react-icons/ai";
+import { Badge } from "../ui/badge";
 
 export default async function Navbar() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const { data: user } = await supabase
+    .from("profiles")
+    .select("id, user_name, avatar_url")
+    .eq("id", session?.user.id as string)
+    .single();
 
   const signOut = async () => {
     "use server";
@@ -71,9 +78,10 @@ export default async function Navbar() {
           <li className="flex items-center">
             {user ? (
               <div className="flex items-center gap-2">
+                <Badge className="px-2 py-1">{user.user_name}</Badge>
                 <NavbarAvatar
-                  avatar={user?.user_metadata.avatar_url}
-                  fallback={user.user_metadata.name}
+                  avatar={user.avatar_url}
+                  fallback={user.user_name}
                 />
                 <form action={signOut}>
                   <Button className="hidden sm:block" variant="destructive">

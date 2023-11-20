@@ -26,24 +26,8 @@ export async function GET(request: Request) {
     .single();
 
   if (data) {
-    const { id } = data;
-    await supabase
-      .from("profiles")
-      .update({
-        id: session?.user.id,
-        user_name: session?.user.user_metadata.name,
-        avatar_url: session?.user.user_metadata.avatar_url,
-      })
-      .match({ id });
+    return NextResponse.redirect(requestUrl.origin);
   } else {
-    await supabase.from("profiles").insert([
-      {
-        id: session?.user.id as string,
-        user_name: session?.user.user_metadata.name,
-        avatar_url: session?.user.user_metadata.avatar_url,
-      },
-    ]);
+    return NextResponse.redirect(`${requestUrl.origin}/signup`);
   }
-
-  return NextResponse.redirect(requestUrl.origin);
 }

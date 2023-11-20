@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center gap-2 mt-10 bg-muted w-5/6 mx-auto max-w-4xl ring-2 ring-primary rounded-xl p-10">
       <h1 className="text-3xl">CS 스터디 체커</h1>
-      <Lottie animationData={lotti} className="w-[400px]" />
+      <Lottie animationData={lotti} className="w-[400px] h-[300px]" />
       <div className="text-lg text-center">
         <p>
           450가지 자바스크립트 주제 중 누가 어떤 주제를 했는지 안했는지 체크하기
