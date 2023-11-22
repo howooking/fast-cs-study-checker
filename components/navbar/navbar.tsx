@@ -54,7 +54,7 @@ export default async function Navbar() {
           <li>
             <Link href="/subjects">
               <Button variant="outline" className="hidden sm:block">
-                스터디체크
+                체크하러가기
               </Button>
               <Button variant="outline" className="sm:hidden block">
                 <AiOutlineCheck />
@@ -67,7 +67,20 @@ export default async function Navbar() {
               target="_blank"
             >
               <Button variant="outline" className="hidden sm:block">
-                스터디깃허브
+                스터디주제
+              </Button>
+              <Button variant="outline" className="sm:hidden block">
+                <AiFillGithub />
+              </Button>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="https://github.com/CS-TeamStudy/CS_Study_for_Interview"
+              target="_blank"
+            >
+              <Button variant="outline" className="hidden sm:block">
+                우리들리포
               </Button>
               <Button variant="outline" className="sm:hidden block">
                 <AiFillGithub />

@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { cookies } from "next/headers";
 import SubjectsTable from "@/components/table/subjects-table";
-import type { Database } from "@/lib/database.types";
 import { redirect } from "next/navigation";
 import SubjectsTableSkeleton from "@/components/table/subject-table-skeleton";
 import SubjectFilter from "@/components/table/subject-filter";
